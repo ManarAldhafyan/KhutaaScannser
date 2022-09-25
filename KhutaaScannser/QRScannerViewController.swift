@@ -15,9 +15,10 @@ import FirebaseStorage
 
 class QRScannerViewController: UIViewController {
     var firebaseDatabaseReference = Database.database().reference()
-   // let storageRef = Storage.storage().reference()
     var ref:DatabaseReference!
     let db = Firestore.firestore()
+    var reward:RewardsStruct!
+    
 
     var captureSession = AVCaptureSession()
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
@@ -99,9 +100,28 @@ class QRScannerViewController: UIViewController {
     
     
     
-    func presentInfo(){
+    func presentInfo(sender: Any?) {
+    
+        print("---------------- Entered presentInfo func -------------------")
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ViewCodeInfoSBI") as? ViewCodeInfoVC
+        vc?.RTitle = reward.RewardTitle
+        vc?.RDesc = reward.RewardTitle
+        vc?.RDiscount = reward.RewardDiscount
+        self.present(vc!, animated: true, completion: nil)
+        //navigationController?.pushViewController(vc!, animated: true)
+
         
         
+//        let popUpVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewCodeInfoSBI") as! ViewCodeInfoVC
+//            popUpVC.RTitle = reward.RewardTitle
+//            popUpVC.RDesc = reward.RewardTitle
+//            popUpVC.RDiscount = reward.RewardDiscount
+//
+//        self.addChild(popUpVC)
+//            popUpVC.view.frame = self.view.frame
+//            self.view.addSubview(popUpVC.view)
+//            popUpVC.didMove(toParent: self)
+
         
     }
     
@@ -135,28 +155,43 @@ extension QRScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
                         print(error)
                     }else{
                         for document in (snapshot?.documents)!{
-                            print(document.documentID)
+//                            print(document.documentID)
 
                             if String(document.documentID) == QRnumber{
-                                    print("the cur key is:   ")
-                                    print(document.documentID)
+//                                    print("the cur key is:   ")
+//                                    print(document.documentID)
                                     
                                 
                                 self.db.collection("AllQRCodes").document(QRnumber).setData( ["isScanned": true], merge: true)
                     
                                 let ReciverID = document.data()["ReciverID"] as! String
                                 let RewardKey = document.data()["RewardKey"] as! String
+                                let RewardTitle = document.data()["RewardTitle"] as! String
+                                let RewardDiscount = document.data()["RewardDiscount"] as! String
+                                let RewardDesc = document.data()["RewardDesc"] as! String
+                                
+                                let rewardOBJ = RewardsStruct( ReciverID : ReciverID, RewardKey: RewardKey , RewardTitle: RewardTitle , RewardDiscount: RewardDiscount, RewardDesc: RewardDesc )
+                                
+                                self.reward = rewardOBJ
+                                let sender : RewardsStruct = rewardOBJ
                                     
-                                    print("resciver id is  " + ReciverID)
-                                    print("RewardKey is "+RewardKey)
+//                                    print("resciver id is  " + ReciverID)
+//                                    print("RewardKey is "+RewardKey)
                                     
                                     self.db.collection("users").document(ReciverID).collection("UserRewards").document(RewardKey).setData( ["isScanned": true], merge: true)
+                                
+                               
                                     
                                     print("Scanned successfully")
                                     self.messageLabel.text = "Succefully Scanned"
+                               
+                                self.db.collection("users").document(ReciverID).collection("UserRewards").document(RewardKey).delete()
+                                
                                 self.db.collection("AllQRCodes").document(QRnumber).delete()
+                                
+                                self.presentInfo(sender: sender)
+                                
 
-                                    //self.ref.child("AllQRCodes").child(QRnumber).removeValue()
                                     
                                     break
                                     

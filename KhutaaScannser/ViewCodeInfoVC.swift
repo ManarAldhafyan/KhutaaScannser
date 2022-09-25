@@ -19,9 +19,49 @@ class ViewCodeInfoVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        titleTextField.text = RTitle
+        descTextField.text = RDesc
+        codeTextField.text = RDiscount
+        
+        moveIn()
 
-        // Do any additional setup after loading the view.
     }
+    
+    
+    @IBAction func closeTapped(_ sender: Any) {
+        
+        print("Back to scanner")
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "QRCodeSBI") as? QRCodeViewController
+        
+        self.present(vc!, animated: true, completion: nil)
+        //navigationController?.pushViewController(vc!, animated: true)
+        
+        //moveOut()
+
+    }
+
+    
+    func moveIn() {
+            self.view.transform = CGAffineTransform(scaleX: 1.35, y: 1.35)
+            self.view.alpha = 0.0
+
+            UIView.animate(withDuration: 0.24) {
+                self.view.transform = CGAffineTransform.identity
+                self.view.alpha = 1.0
+            }
+        }
+
+    
+        func moveOut() {
+            UIView.animate(withDuration: 0.24, animations: {
+                self.view.transform = CGAffineTransform(scaleX: 1.35, y: 1.35)
+                self.view.alpha = 0.0
+            }) { _ in
+                self.view.removeFromSuperview()
+            }
+        }
     
 
    
