@@ -128,54 +128,57 @@ extension QRScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
             qrCodeFrameView?.frame = barCodeObject!.bounds
             if metadataObj.stringValue != nil {
                 let QRnumber = metadataObj.stringValue ?? ""
-                
-            let ref = ref.child("AllQRCodes")
-            ref.getData { [self] (error, snapshot) in
-                print("snapshot \(snapshot.value as Any)")
-               
-                    if let value = snapshot.value as? [String: Any] {
-                        for key in value.keys {
+            
+                db.collection("AllQRCodes").getDocuments(completion: {snapshot,error in
+                    if error != nil {
+                        print("error retrive")
+                        print(error)
+                    }else{
+                        for document in (snapshot?.documents)!{
+                            print(document.documentID)
 
-                            if key == QRnumber {
+                            if String(document.documentID) == QRnumber{
+                                    print("the cur key is:   ")
+                                    print(document.documentID)
+                                    
                                 
-                                self.ref.child("AllQRCodes").child(QRnumber).child("isScanned").setValue(true)
-                                
-                                
-//                                print("Scanned successfully")
-//                                self.messageLabel.text = "Succefully Scanned"
-//                                print(key)
-                                
-                                let dictionary = snapshot.value as? NSDictionary
-                                //print("Dictionary is:  " )
-                                //print(dictionary)
-                                
-                                let QRnumber1 = dictionary?[QRnumber] as? [String:Any]
-                                let ReciverID = QRnumber1?["ReciverID"] as? String ?? ""
-                                let RewardKey = QRnumber1?["RewardKey"] as? String ?? ""
-                                
-                                print("resciver id is  " + ReciverID)
-                                print("RewardKey is "+RewardKey)
-                                
-                                db.collection("users").document(ReciverID).collection("UserRewards").document(RewardKey).setData( ["isScanned": true], merge: true)
-                                
-                                print("Scanned successfully")
-                                self.messageLabel.text = "Succefully Scanned"
+                                self.db.collection("AllQRCodes").document(QRnumber).setData( ["isScanned": true], merge: true)
+                    
+                                let ReciverID = document.data()["ReciverID"] as! String
+                                let RewardKey = document.data()["RewardKey"] as! String
+                                    
+                                    print("resciver id is  " + ReciverID)
+                                    print("RewardKey is "+RewardKey)
+                                    
+                                    self.db.collection("users").document(ReciverID).collection("UserRewards").document(RewardKey).setData( ["isScanned": true], merge: true)
+                                    
+                                    print("Scanned successfully")
+                                    self.messageLabel.text = "Succefully Scanned"
+                                self.db.collection("AllQRCodes").document(QRnumber).delete()
 
-                                self.ref.child("AllQRCodes").child(QRnumber).removeValue()
+                                    //self.ref.child("AllQRCodes").child(QRnumber).removeValue()
+                                    
+                                    break
+                                    
+                                } // end if key
                                 
-                                break
+                                else{
+                                    self.messageLabel.text = "The QR code is not valid"
+                                }
+                             // end keys loop
                             
-                            }
-                        }
-                    } else {
-                        self.messageLabel.text = "The QR code is not valid"
+                        }// end documents for loop
+                    } // end else in line 136
                     
-                    }
-                    
-                }
-            }
-         }
-     }
+                })//end documents completuin
+                
+                
+                
+                
+                
+            } //end (if metadataObj.stringValue) line 129
+         } // end (if  supportedCodeTypes.contains) line 125
+     } // end meteadata func
     
  }
                              
