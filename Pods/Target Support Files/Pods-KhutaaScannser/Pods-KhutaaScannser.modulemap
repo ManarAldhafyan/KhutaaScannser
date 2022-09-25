@@ -1,0 +1,6 @@
+framework module Pods_KhutaaScannser {
+  umbrella header "Pods-KhutaaScannser-umbrella.h"
+
+  export *
+  module * { export * }
+}
