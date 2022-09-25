@@ -18,14 +18,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZn-Dn-BqH">
-                                <rect key="frame" x="108" y="280" width="198" height="242"/>
-                                <state key="normal" image="logo"/>
+                                <rect key="frame" x="108" y="290" width="198" height="242"/>
+                                <state key="normal" image="KhutaaScannerLogo"/>
                                 <connections>
                                     <segue destination="1Ye-pq-Y7Q" kind="presentation" id="LYZ-TY-OFG"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click to scan" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7op-SJ-l4h">
-                                <rect key="frame" x="92" y="530" width="230" height="33"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click To Scan" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7op-SJ-l4h">
+                                <rect key="frame" x="92" y="573" width="230" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="33" id="yKW-6Y-1if"/>
                                 </constraints>
@@ -39,11 +39,11 @@
                         <constraints>
                             <constraint firstItem="fZn-Dn-BqH" firstAttribute="leading" secondItem="6Ha-m4-geQ" secondAttribute="leading" constant="108" id="4yP-zU-7rE"/>
                             <constraint firstItem="fZn-Dn-BqH" firstAttribute="centerX" secondItem="2En-pp-jBf" secondAttribute="centerX" id="8Eg-EF-AQc"/>
-                            <constraint firstItem="7op-SJ-l4h" firstAttribute="top" secondItem="fZn-Dn-BqH" secondAttribute="bottom" constant="8" symbolic="YES" id="Loe-U5-Hhe"/>
+                            <constraint firstItem="7op-SJ-l4h" firstAttribute="top" secondItem="fZn-Dn-BqH" secondAttribute="bottom" constant="41" id="Loe-U5-Hhe"/>
                             <constraint firstItem="7op-SJ-l4h" firstAttribute="leading" secondItem="6Ha-m4-geQ" secondAttribute="leading" constant="92" id="PAc-Gt-oEn"/>
                             <constraint firstItem="7op-SJ-l4h" firstAttribute="centerX" secondItem="fZn-Dn-BqH" secondAttribute="centerX" id="TrB-Iu-eVV"/>
-                            <constraint firstItem="6Ha-m4-geQ" firstAttribute="bottom" secondItem="7op-SJ-l4h" secondAttribute="bottom" constant="299" id="bvI-xj-4Rz"/>
-                            <constraint firstItem="fZn-Dn-BqH" firstAttribute="top" secondItem="6Ha-m4-geQ" secondAttribute="top" constant="232" id="evk-HX-pgh"/>
+                            <constraint firstItem="6Ha-m4-geQ" firstAttribute="bottom" secondItem="7op-SJ-l4h" secondAttribute="bottom" constant="256" id="bvI-xj-4Rz"/>
+                            <constraint firstItem="fZn-Dn-BqH" firstAttribute="top" secondItem="6Ha-m4-geQ" secondAttribute="top" constant="242" id="evk-HX-pgh"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -344,7 +344,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="logo" width="1024" height="1024"/>
+        <image name="KhutaaScannerLogo" width="312" height="315"/>
         <image name="xmark.app" catalog="system" width="128" height="114"/>
         <namedColor name="K- Buttons-Green">
             <color red="0.17700000107288361" green="0.3580000102519989" blue="0.20800000429153442" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
